@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2016 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,9 @@
 #define UNUSED __attribute__((unused))
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
+
+int fd = 0;
+pthread_mutex_t g_mtx;
 
 static const consumerir_freq_range_t consumerir_freqs[] = {
 #ifdef USE_ONE_FREQ_RANGE
@@ -81,9 +84,6 @@ static bool append_number(char **buffer, int *len, int *size, int number)
     return try_append_number(*buffer, len, *size, number);
 }
 
-
-pthread_mutex_t g_mtx;
-int fd = 0;
 static int consumerir_transmit(UNUSED struct consumerir_device *dev,
    int carrier_freq, const int pattern[], int pattern_len)
 {
